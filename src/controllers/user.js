@@ -1,4 +1,3 @@
-const connection = require('../database/connection.js');
 const Connection = require('../database/connection.js');
 
 module.exports = {
@@ -19,8 +18,23 @@ module.exports = {
         };
     },
     async Login(request, response){
-        const Data = await connection('user').select('*');
-        console.log(Data);
-        console.log("login");
+        const {User, Pass} = request.body;
+        
+        const CUser = await Connection('user')
+        .where('user', User).select('user');
+        
+        const CPass = await Connection('user')
+        .where('pass', Pass).select('pass');
+
+        if(CUser.length === 0 ){
+            return response.json('User ou Password incorrect!');
+        } else if(CPass.length === 0 ){
+            return response.json('User ou Password incorrect!');
+        } else {
+            const Key = await Connection('user').where('user', User).select('key');
+            console.log(Key);
+            return response.json(Key);
+        };
+        
     },
 }
