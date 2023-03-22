@@ -17,7 +17,15 @@ module.exports = {
         }catch(Err){
             return response.json("server ErRoR!");
 
-        }
+        };        
+    },
+    async List(request, response){
+        const Data = await Connection('produtos').select('*')
         
+        if(Data.length === 0){
+            return response.json('Erro ao consultar a base de Dados');
+        } else {
+            return response.json(Data);
+        }
     },
 }

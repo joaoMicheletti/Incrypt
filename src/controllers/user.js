@@ -37,4 +37,13 @@ module.exports = {
         };
         
     },
+    async List(request, response){
+        const Data = await Connection('user').select('*')
+        
+        if(Data.length === 0){
+            return response.json('Erro ao consultar a base de Dados');
+        } else {
+            return response.json(Data);
+        }
+    },
 }
