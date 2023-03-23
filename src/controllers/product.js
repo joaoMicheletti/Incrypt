@@ -19,6 +19,16 @@ module.exports = {
 
         };        
     },
+    async SpecifcProduct(request, response){
+        const {Key} = request.body;
+        const Data = await Connection('produtos').where('key', Key).select('*')
+        try {
+            console.log(Data);
+            return response.json(Data);
+        }catch(Erro){
+            return response.json("ErR0 Interno !");
+        };
+    },
     async List(request, response){
         const Data = await Connection('produtos').select('*')
         
